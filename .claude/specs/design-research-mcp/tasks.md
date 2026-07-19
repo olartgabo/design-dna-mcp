@@ -22,19 +22,19 @@ Ordered, independently verifiable. Each cites the requirement it satisfies and h
 
 ## Phase 1 — Capture (US-1)
 
-- [ ] **T5. Crawler core**
+- [x] **T5. Crawler core**
   `crawler.ts`: launch, realistic context, goto + settle, auto-scroll, DOM snapshot saved to capture dir; capture row written with status.
   *Verify:* integration test against local fixture HTML site (offline, deterministic).
 
-- [ ] **T6. Style extraction**
+- [x] **T6. Style extraction**
   `styles.ts` in-page collection: computed-style sample, fonts + hierarchy, color-frequency palette, spacing histogram → inferred scale.
   *Verify:* unit tests for palette/spacing/hierarchy inference on synthetic style data; fixture-site integration asserts expected fonts/colors.
 
-- [ ] **T7. Motion extraction**
+- [x] **T7. Motion extraction**
   `motion.ts`: CSSOM keyframes/transitions walk + css-tree fallback for cross-origin sheets; stored in `motion_json`.
   *Verify:* unit tests on CSS fixtures (keyframes, shorthand transitions); fixture site includes an animation that must be detected.
 
-- [ ] **T8. Screenshots + `crawl_website` tool**
+- [x] **T8. Screenshots + `crawl_website` tool**
   `screenshots.ts` (full page + ≤8 viewport slices), wire everything into the `crawl_website` MCP tool returning the compact summary; re-crawl creates a new capture version; structured errors for bad/unreachable URLs.
   *Verify:* mcpjam call against fixture site returns captureId + summary; second call yields a new captureId; invalid URL returns `INVALID_URL` not a crash.
 

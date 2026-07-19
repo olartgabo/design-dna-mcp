@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Studio Fixture — Editorial Portfolio</title>
+<style>
+  :root { --accent: #ff3e00; }
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    font-family: Georgia, serif;
+    background: #111111;
+    color: #fafafa;
+  }
+  nav {
+    position: sticky; top: 0;
+    display: flex; gap: 24px;
+    padding: 16px 64px;
+    background: #111111;
+  }
+  nav a {
+    color: #fafafa; text-decoration: none;
+    font-family: "Courier New", monospace;
+    font-size: 12px; letter-spacing: 0.1em;
+    transition: color 0.2s ease;
+  }
+  nav a:hover { color: var(--accent); }
+  .hero {
+    min-height: 90vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 64px;
+  }
+  h1 {
+    font-size: 96px; font-weight: 700;
+    line-height: 1.05;
+    animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  section { padding: 64px; }
+  h2 { font-size: 48px; margin-bottom: 24px; }
+  .index { font-family: "Courier New", monospace; font-size: 12px; color: var(--accent); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .card {
+    background: #1a1a1a; padding: 24px;
+    transition: transform 0.3s ease;
+  }
+  .card:hover { transform: translateY(-8px); }
+  .card p { margin-top: 8px; font-size: 16px; color: #9a9a9a; }
+  footer {
+    padding: 64px; margin-top: 64px;
+    border-top: 1px solid #333333;
+    font-family: "Courier New", monospace; font-size: 12px;
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <a href="#work">01 / Work</a>
+  <a href="#about">02 / About</a>
+  <a href="#contact">03 / Contact</a>
+</nav>
+<div class="hero">
+  <span class="index">Portfolio — 2026</span>
+  <h1>Design is<br>research.</h1>
+</div>
+<section id="work">
+  <span class="index">01</span>
+  <h2>Selected Work</h2>
+  <div class="grid">
+    <div class="card"><h3>Atlas</h3><p>Identity, web</p></div>
+    <div class="card"><h3>Meridian</h3><p>Editorial system</p></div>
+    <div class="card"><h3>Vantage</h3><p>Product design</p></div>
+    <div class="card"><h3>Signal</h3><p>Type direction</p></div>
+    <div class="card"><h3>Forma</h3><p>Art direction</p></div>
+    <div class="card"><h3>Baseline</h3><p>Design research</p></div>
+  </div>
+</section>
+<section id="about">
+  <span class="index">02</span>
+  <h2>About</h2>
+  <p>A fixture page for the Design Research MCP integration tests.</p>
+</section>
+<footer id="contact">
+  <span>03 / hello@fixture.test</span>
+</footer>
+</body>
+</html>
