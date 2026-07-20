@@ -45,7 +45,7 @@ const fakeEmbedder: Embedder = async (texts) =>
 
 beforeEach(() => {
   dir = join(tmpdir(), `drm-lib-${process.pid}-${Math.random().toString(36).slice(2)}`);
-  config = loadConfig({ DESIGN_RESEARCH_DATA_DIR: dir });
+  config = loadConfig({ DESIGN_DNA_DATA_DIR: dir });
   ensureDataDirs(config);
   db = openDatabase(config.dbPath, DIMS);
 });

@@ -9,7 +9,7 @@ const transport = new StdioClientTransport({
   args: [join(projectDir, "dist", "index.js")],
   env: {
     ...process.env,
-    DESIGN_RESEARCH_DATA_DIR: join(tmpdir(), `drm-smoke-${Date.now()}`),
+    DESIGN_DNA_DATA_DIR: join(tmpdir(), `ddm-smoke-${Date.now()}`),
   },
 });
 

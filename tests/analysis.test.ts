@@ -19,7 +19,7 @@ let config: Config;
 beforeEach(() => {
   dir = join(tmpdir(), `drm-an-${process.pid}-${Math.random().toString(36).slice(2)}`);
   mkdirSync(dir, { recursive: true });
-  config = loadConfig({ DESIGN_RESEARCH_DATA_DIR: dir, ANTHROPIC_API_KEY: "test-key" });
+  config = loadConfig({ DESIGN_DNA_DATA_DIR: dir, ANTHROPIC_API_KEY: "test-key" });
   db = openDatabase(join(dir, "db.sqlite"), 4);
 });
 
@@ -146,7 +146,7 @@ describe("extractComponents", () => {
   });
 
   it("makeMessageCreator requires the API key", () => {
-    const noKey = loadConfig({ DESIGN_RESEARCH_DATA_DIR: dir });
+    const noKey = loadConfig({ DESIGN_DNA_DATA_DIR: dir });
     expect(() => makeMessageCreator(noKey)).toThrowError(/ANTHROPIC_API_KEY/);
   });
 });

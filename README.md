@@ -1,6 +1,35 @@
-# design-dna-mcp
+<div align="center">
+
+<pre>
+\  ··  /\  ··  /\  ··  /
+ \ ·· /  \ ·· /  \ ·· /
+  \··/    \··/    \··/
+   \/      \/      \/
+   /\      /\      /\
+  /··\    /··\    /··\
+ / ·· \  / ·· \  / ·· \
+/  ··  \/  ··  \/  ··  \
+
+d e s i g n   ·   d n a
+</pre>
 
 **Extract the design DNA of any website — a searchable library of reusable UI patterns, built for Claude.**
+
+[![CI](https://github.com/olartgabo/design-dna-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/olartgabo/design-dna-mcp/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-000000?style=flat-square)](LICENSE)
+[![Node](https://img.shields.io/badge/node-%E2%89%A520-3c873a?style=flat-square)](https://nodejs.org)
+[![MCP](https://img.shields.io/badge/Model_Context_Protocol-server-6f4cff?style=flat-square)](https://modelcontextprotocol.io)
+[![Verified with MCPJam](https://img.shields.io/badge/verified_with-MCPJam-ff5c00?style=flat-square)](https://github.com/MCPJam/inspector)
+
+<br>
+
+<img src="docs/assets/capture-readout.png" alt="A crawl of linear.app: full-page capture alongside the extracted palette, typefaces, spacing scale, and component candidates" width="100%">
+
+<sub>One `crawl_website` call on <code>linear.app</code> — full-page capture, 8-color palette, typefaces, spacing scale, 167 motion rules, and the component candidates that come out of it.</sub>
+
+</div>
+
+---
 
 Design galleries (Godly, Awwwards, Minimal Gallery…) are great sources of ideas but poor databases. You bookmark a site because you liked *one* thing about it — a navigation treatment, a spacing system, a hover animation — and then you can never find it again.
 
@@ -98,11 +127,13 @@ Add to `claude_desktop_config.json`:
 |---|---|---|---|
 | `ANTHROPIC_API_KEY` | for `extract_components` | — | Claude vision analysis |
 | `VOYAGE_API_KEY` | for save/search | — | Embeddings |
-| `DESIGN_RESEARCH_DATA_DIR` | no | `~/.design-research-mcp` | SQLite DB + screenshots |
-| `DESIGN_RESEARCH_MODEL` | no | `claude-sonnet-5` | Analysis model |
-| `DESIGN_RESEARCH_EMBEDDING_MODEL` | no | `voyage-3.5` | Embedding model |
+| `DESIGN_DNA_DATA_DIR` | no | `~/.design-dna-mcp` | SQLite DB + screenshots |
+| `DESIGN_DNA_MODEL` | no | `claude-sonnet-5` | Analysis model |
+| `DESIGN_DNA_EMBEDDING_MODEL` | no | `voyage-3.5` | Embedding model |
 
 The server starts fine without keys — tools that need a missing key fail per-call with a clear error naming the variable. The library is shared across all your projects (it lives in the data dir, not the repo).
+
+<sub>This project was previously named `design-research-mcp`. The old `DESIGN_RESEARCH_*` variables still work, and an existing `~/.design-research-mcp` library is adopted in place — no migration needed.</sub>
 
 ## How it works
 
@@ -139,7 +170,9 @@ Design decisions worth knowing:
 - Embeddings are tiny Voyage calls per save/search — effectively negligible.
 - Voyage's **free tier allows ~3 requests/minute**; the client retries with long backoff (up to ~70s), so rapid-fire searches feel slow until you add billing to the Voyage account.
 
-## Verifying with mcpjam
+## Verified with MCPJam
+
+Every tool in this server was exercised over a real stdio transport with [**MCPJam**](https://github.com/MCPJam/inspector) — schema validation, handshake, and live tool calls — not just unit tests. Reproduce it yourself:
 
 ```sh
 npx @mcpjam/cli tools list --transport stdio --command node --args dist/index.js
@@ -151,14 +184,14 @@ npx @mcpjam/cli tools call --transport stdio --command node --args dist/index.js
 ## Development
 
 ```sh
-npm test          # 49 offline tests (vitest) — local fixture site, no API keys needed
+npm test          # 51 offline tests (vitest) — local fixture site, no API keys needed
 npm run dev       # run from source via tsx
 node scripts/try-crawl.mjs https://linear.app   # crawl real sites (no keys needed)
 node scripts/e2e.mjs https://linear.app         # full live loop (needs both keys)
 node scripts/mcp-smoke.mjs                      # stdio round-trip smoke test
 ```
 
-The full spec (requirements → design → tasks, with the verification sweep) lives in [`.claude/specs/design-research-mcp/`](.claude/specs/design-research-mcp/). The original product vision is in [`CONTEXT.md`](CONTEXT.md).
+Built spec-first. The full trail — requirements → design → tasks, with the verification sweep — lives in [`.claude/specs/design-dna-mcp/`](.claude/specs/design-dna-mcp/), and the original product vision is in [`docs/VISION.md`](docs/VISION.md).
 
 ## Roadmap (v2)
 

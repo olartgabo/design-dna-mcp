@@ -6,24 +6,43 @@ import { loadConfig, ensureDataDirs } from "../src/config.js";
 import { AppError, missingApiKey, toToolError } from "../src/shared/errors.js";
 
 describe("loadConfig", () => {
-  it("respects DESIGN_RESEARCH_DATA_DIR override", () => {
-    const config = loadConfig({ DESIGN_RESEARCH_DATA_DIR: "C:\\custom\\dir" });
+  it("respects DESIGN_DNA_DATA_DIR override", () => {
+    const config = loadConfig({ DESIGN_DNA_DATA_DIR: "C:\\custom\\dir" });
     expect(config.dataDir).toBe("C:\\custom\\dir");
     expect(config.dbPath).toBe(join("C:\\custom\\dir", "db.sqlite"));
   });
 
-  it("defaults to ~/.design-research-mcp and claude-sonnet-5", () => {
+  it("still honours the pre-rename DESIGN_RESEARCH_* vars", () => {
+    const config = loadConfig({
+      DESIGN_RESEARCH_DATA_DIR: "C:\\legacy\\dir",
+      DESIGN_RESEARCH_MODEL: "claude-opus-4-8",
+      DESIGN_RESEARCH_EMBEDDING_MODEL: "voyage-3",
+    });
+    expect(config.dataDir).toBe("C:\\legacy\\dir");
+    expect(config.analysisModel).toBe("claude-opus-4-8");
+    expect(config.embeddingModel).toBe("voyage-3");
+  });
+
+  it("prefers DESIGN_DNA_* when both are set", () => {
+    const config = loadConfig({
+      DESIGN_DNA_DATA_DIR: "C:\\new\\dir",
+      DESIGN_RESEARCH_DATA_DIR: "C:\\legacy\\dir",
+    });
+    expect(config.dataDir).toBe("C:\\new\\dir");
+  });
+
+  it("defaults to a home data dir and claude-sonnet-5", () => {
     const config = loadConfig({});
-    expect(config.dataDir).toMatch(/\.design-research-mcp$/);
+    expect(config.dataDir).toMatch(/\.design-(dna|research)-mcp$/);
     expect(config.analysisModel).toBe("claude-sonnet-5");
     expect(config.embeddingModel).toBe("voyage-3.5");
     expect(config.anthropicApiKey).toBeUndefined();
   });
 
   it("ensureDataDirs creates capture/component dirs", () => {
-    const dir = join(tmpdir(), `drm-test-${process.pid}-${Math.random().toString(36).slice(2)}`);
+    const dir = join(tmpdir(), `ddm-test-${process.pid}-${Math.random().toString(36).slice(2)}`);
     try {
-      const config = loadConfig({ DESIGN_RESEARCH_DATA_DIR: dir });
+      const config = loadConfig({ DESIGN_DNA_DATA_DIR: dir });
       ensureDataDirs(config);
       expect(existsSync(config.capturesDir)).toBe(true);
       expect(existsSync(config.componentsDir)).toBe(true);

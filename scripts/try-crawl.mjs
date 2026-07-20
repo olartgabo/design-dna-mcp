@@ -12,8 +12,8 @@ if (urls.length === 0) {
   process.exit(1);
 }
 
-const dataDir = process.env.DESIGN_RESEARCH_DATA_DIR ?? join(tmpdir(), `drm-try-${Date.now()}`);
-const config = loadConfig({ ...process.env, DESIGN_RESEARCH_DATA_DIR: dataDir });
+const dataDir = process.env.DESIGN_DNA_DATA_DIR ?? join(tmpdir(), `ddm-try-${Date.now()}`);
+const config = loadConfig({ ...process.env, DESIGN_DNA_DATA_DIR: dataDir });
 ensureDataDirs(config);
 const db = openDatabase(config.dbPath, config.embeddingDims);
 

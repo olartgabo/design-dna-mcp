@@ -23,7 +23,7 @@ beforeAll(async () => {
     new StdioClientTransport({
       command: process.execPath,
       args: [join(projectRoot, "node_modules", "tsx", "dist", "cli.mjs"), join(projectRoot, "src", "index.ts")],
-      env: { ...process.env, DESIGN_RESEARCH_DATA_DIR: dataDir },
+      env: { ...process.env, DESIGN_DNA_DATA_DIR: dataDir },
     }),
   );
 }, 60_000);

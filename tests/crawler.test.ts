@@ -19,7 +19,7 @@ let db: DB;
 beforeAll(async () => {
   ({ server, baseUrl } = await startFixtureServer());
   dir = join(tmpdir(), `drm-crawl-${process.pid}-${Math.random().toString(36).slice(2)}`);
-  config = loadConfig({ DESIGN_RESEARCH_DATA_DIR: dir });
+  config = loadConfig({ DESIGN_DNA_DATA_DIR: dir });
   ensureDataDirs(config);
   db = openDatabase(config.dbPath, config.embeddingDims);
 });
