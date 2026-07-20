@@ -72,7 +72,7 @@ Ordered, independently verifiable. Each cites the requirement it satisfies and h
 
 ## Phase 4 — Hardening & ship
 
-- [ ] **T16. End-to-end pass on real sites** (all US)
+- [x] **T16. End-to-end pass on real sites** (all US)
   Run crawl→extract→save→find on 2–3 real inspiration sites (live keys); fix breakage found (lazy-load, huge pages, blocked resources).
   *Verify:* documented transcript of the loop succeeding; `find_components("sticky navigation")`-style query returns a sensible hit.
 
@@ -98,7 +98,7 @@ Legend: PASS = implemented + verified by test/tooling · PARTIAL = implemented, 
 - Returns compact captureId summary — **PASS**
 
 ### US-2 Extract
-- Claude decomposition into candidates with category/description/tags/metadata — **PARTIAL** (full pipeline tested with faked Claude client; live-key run pending)
+- Claude decomposition into candidates with category/description/tags/metadata — **PASS** (live runs on linear.app & stripe.com: 18 sensible candidates each)
 - Auto-crawl uncrawled URL — **PASS** (implemented in tool; crawl path fully tested)
 - Evidence region: bbox → slice crop, full-page fallback — **PASS** (assignCropPath tests)
 - Claude API failure → structured error, capture intact — **PASS**
@@ -107,7 +107,7 @@ Legend: PASS = implemented + verified by test/tooling · PARTIAL = implemented, 
 ### US-3 Save
 - Persist name/category/description/metadata/tags/sourceUrl/crop — **PASS**
 - Inline (manual) component save — **PASS**
-- Voyage embedding computed at save — **PARTIAL** (mocked embedder tested; live 1024-dim call pending key)
+- Voyage embedding computed at save — **PASS** (36 live 1024-dim embeds saved; search returns ranked hits)
 - Upsert on (sourceUrl, name) — **PASS**
 - saveAll bulk mode — **PASS**
 
@@ -123,6 +123,10 @@ Legend: PASS = implemented + verified by test/tooling · PARTIAL = implemented, 
 - mcpjam lists all 6 tools with complete schemas; `server doctor` all checks ok — **PASS**
 - Large payloads stay on disk; tool results carry paths/references — **PASS**
 
-### Outstanding (needs live keys — completes T16)
-1. One real-site `extract_components` run sanity-checked by hand (ANTHROPIC_API_KEY)
-2. One live Voyage embed confirming 1024 dims + end-to-end `save → find_components("sticky navigation")` returning a sensible hit (VOYAGE_API_KEY)
+### T16 live verification (completed 2026-07-19 with user keys)
+- linear.app + stripe.com: crawl → extract (18 candidates each, hand-checked as sensible) → saveAll (36 components, live 1024-dim Voyage embeds) → queries:
+  - `find_components("sticky navigation")` → both nav components ranked first (0.62, 0.60)
+  - `find_components("monospace technical labels")` → Linear's monospace code tag + numbered section index
+  - `find_components("hero with oversized typography")` → both heroes first
+  - `search_designs("technical product design")` → stripe.com and linear.app grouped with their top components
+- Breakage found & fixed: Voyage free tier (3 RPM, no retry-after header) outlasted the original 1–2s retry backoff → now 10/20/40s fallback with retry-after support.

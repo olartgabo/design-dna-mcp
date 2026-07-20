@@ -8,7 +8,8 @@ export type InputType = "document" | "query";
 export type Embedder = (texts: string[], inputType: InputType) => Promise<Float32Array[]>;
 
 const VOYAGE_URL = "https://api.voyageai.com/v1/embeddings";
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 3;
+const MAX_RETRY_DELAY_MS = 60_000;
 
 export function makeVoyageEmbedder(
   config: Config,
@@ -20,10 +21,12 @@ export function makeVoyageEmbedder(
   return async (texts, inputType) => {
     if (texts.length === 0) return [];
     let lastError = "";
+    // free-tier Voyage allows only a few requests/minute, so waits must be long
+    let nextDelayMs = 2_500;
     for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
       if (attempt > 0) {
-        await new Promise((r) => setTimeout(r, 500 * 2 ** attempt));
-        logger.warn(`voyage retry ${attempt}: ${lastError}`);
+        logger.warn(`voyage retry ${attempt} in ${nextDelayMs}ms: ${lastError}`);
+        await new Promise((r) => setTimeout(r, nextDelayMs));
       }
       let res: Response;
       try {
@@ -46,6 +49,12 @@ export function makeVoyageEmbedder(
       }
       if (res.status === 429 || res.status >= 500) {
         lastError = `HTTP ${res.status}`;
+        // Voyage's free tier (3 RPM) sends no retry-after — waits must span the minute window
+        const retryAfter = Number(res.headers.get("retry-after"));
+        nextDelayMs = Math.min(
+          retryAfter > 0 ? retryAfter * 1000 : 10_000 * 2 ** attempt,
+          MAX_RETRY_DELAY_MS,
+        );
         continue;
       }
       if (!res.ok) {

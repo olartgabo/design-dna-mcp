@@ -108,6 +108,7 @@ npx @mcpjam/cli server doctor --transport stdio --command node --args dist/index
 - `crawl_website` is free (local Playwright).
 - `extract_components` makes **one** Claude call with up to 6 images + a distilled JSON payload — roughly 5–10K input tokens plus image tokens per site on `claude-sonnet-5`.
 - Embeddings are one small Voyage call per save / per search query — effectively negligible.
+- Voyage's **free tier is rate-limited to ~3 requests/minute**; the client retries with long backoff (up to ~70s total), so rapid-fire searches may feel slow until you add payment info to the Voyage account (paid tiers are far higher).
 
 ## Development
 
