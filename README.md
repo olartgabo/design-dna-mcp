@@ -1,17 +1,8 @@
 <div align="center">
 
-<pre>
-\  ··  /\  ··  /\  ··  /
- \ ·· /  \ ·· /  \ ·· /
-  \··/    \··/    \··/
-   \/      \/      \/
-   /\      /\      /\
-  /··\    /··\    /··\
- / ·· \  / ·· \  / ·· \
-/  ··  \/  ··  \/  ··  \
+<img src="dna.gif" width="200" />
 
-d e s i g n   ·   d n a
-</pre>
+
 
 **Extract the design DNA of any website — a searchable library of reusable UI patterns, built for Claude.**
 
