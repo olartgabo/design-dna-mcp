@@ -1,6 +1,6 @@
-# Design Research MCP
+# design-dna-mcp
 
-**Turn design inspiration into a searchable knowledge base of reusable UI patterns.**
+**Extract the design DNA of any website — a searchable library of reusable UI patterns, built for Claude.**
 
 Design galleries (Godly, Awwwards, Minimal Gallery…) are great sources of ideas but poor databases. You bookmark a site because you liked *one* thing about it — a navigation treatment, a spacing system, a hover animation — and then you can never find it again.
 
@@ -50,8 +50,8 @@ This MCP server fixes that. Point it at any website and it:
 Requires **Node 20+** and API keys for [Anthropic](https://console.anthropic.com) (analysis) and [Voyage AI](https://dash.voyageai.com) (embeddings).
 
 ```sh
-git clone https://github.com/GaboUwUXddd/design-research-mcp.git
-cd DesignResearchMCP
+git clone https://github.com/olartgabo/design-dna-mcp.git
+cd design-dna-mcp
 npm install
 npx playwright install chromium   # one-time browser download
 npm run build
@@ -70,7 +70,7 @@ npm rebuild better-sqlite3 esbuild
 The most reliable way on any platform (use `-s user` to enable it in all your projects):
 
 ```sh
-claude mcp add-json design-research -s user '{"command":"node","args":["/absolute/path/to/DesignResearchMCP/dist/index.js"],"env":{"ANTHROPIC_API_KEY":"sk-ant-...","VOYAGE_API_KEY":"pa-..."}}'
+claude mcp add-json design-dna -s user '{"command":"node","args":["/absolute/path/to/design-dna-mcp/dist/index.js"],"env":{"ANTHROPIC_API_KEY":"sk-ant-...","VOYAGE_API_KEY":"pa-..."}}'
 ```
 
 ### Register in Claude Desktop
@@ -80,9 +80,9 @@ Add to `claude_desktop_config.json`:
 ```json
 {
   "mcpServers": {
-    "design-research": {
+    "design-dna": {
       "command": "node",
-      "args": ["/absolute/path/to/DesignResearchMCP/dist/index.js"],
+      "args": ["/absolute/path/to/design-dna-mcp/dist/index.js"],
       "env": {
         "ANTHROPIC_API_KEY": "sk-ant-...",
         "VOYAGE_API_KEY": "pa-..."

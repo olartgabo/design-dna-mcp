@@ -14,7 +14,7 @@ export interface AppContext {
 
 export function createServer(ctx: AppContext): McpServer {
   const server = new McpServer({
-    name: "design-research-mcp",
+    name: "design-dna-mcp",
     version: "0.1.0",
   });
 

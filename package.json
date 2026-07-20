@@ -1,12 +1,12 @@
 {
-  "name": "design-research-mcp",
+  "name": "design-dna-mcp",
   "version": "0.1.0",
-  "description": "MCP server that decomposes websites into a searchable library of reusable design components",
+  "description": "Extract the design DNA of any website — an MCP server that decomposes sites into a searchable library of reusable UI patterns",
   "license": "MIT",
   "author": "olartgabo <olartgabo@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GaboUwUXddd/design-research-mcp.git"
+    "url": "git+https://github.com/olartgabo/design-dna-mcp.git"
   },
   "keywords": [
     "mcp",
@@ -22,7 +22,7 @@
   "type": "module",
   "main": "dist/index.js",
   "bin": {
-    "design-research-mcp": "dist/index.js"
+    "design-dna-mcp": "dist/index.js"
   },
   "files": [
     "dist"
