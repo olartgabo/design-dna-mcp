@@ -3,6 +3,22 @@
   "version": "0.1.0",
   "description": "MCP server that decomposes websites into a searchable library of reusable design components",
   "license": "MIT",
+  "author": "olartgabo <olartgabo@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GaboUwUXddd/DesignResearchMCP.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "design",
+    "design-research",
+    "design-system",
+    "playwright",
+    "claude",
+    "embeddings",
+    "sqlite-vec"
+  ],
   "type": "module",
   "main": "dist/index.js",
   "bin": {
