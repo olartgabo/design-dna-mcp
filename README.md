@@ -50,7 +50,7 @@ This MCP server fixes that. Point it at any website and it:
 Requires **Node 20+** and API keys for [Anthropic](https://console.anthropic.com) (analysis) and [Voyage AI](https://dash.voyageai.com) (embeddings).
 
 ```sh
-git clone https://github.com/GaboUwUXddd/DesignResearchMCP.git
+git clone https://github.com/GaboUwUXddd/design-research-mcp.git
 cd DesignResearchMCP
 npm install
 npx playwright install chromium   # one-time browser download
