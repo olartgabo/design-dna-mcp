@@ -25,7 +25,6 @@
     "css-tree": "^3.2.1",
     "playwright": "^1.61.1",
     "sqlite-vec": "^0.1.9",
-    "voyageai": "^0.4.0",
     "zod": "^4.4.3"
   },
   "allowScripts": {

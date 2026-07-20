@@ -3,6 +3,9 @@ import type { Config } from "./config.js";
 import type { DB } from "./db/database.js";
 import { registerCrawlWebsite } from "./tools/crawl-website.js";
 import { registerExtractComponents } from "./tools/extract-components.js";
+import { registerSaveComponent } from "./tools/save-component.js";
+import { registerFindComponents } from "./tools/find-components.js";
+import { registerSearchDesigns } from "./tools/search-designs.js";
 
 export interface AppContext {
   config: Config;
@@ -38,6 +41,9 @@ export function createServer(ctx: AppContext): McpServer {
 
   registerCrawlWebsite(server, ctx);
   registerExtractComponents(server, ctx);
+  registerSaveComponent(server, ctx);
+  registerFindComponents(server, ctx);
+  registerSearchDesigns(server, ctx);
 
   return server;
 }

@@ -54,19 +54,19 @@ Ordered, independently verifiable. Each cites the requirement it satisfies and h
 
 ## Phase 3 — Library (US-3, US-4)
 
-- [ ] **T12. Voyage embeddings client**
+- [x] **T12. Voyage embeddings client**
   `voyage.ts`: batch embed, retries, `MISSING_API_KEY` path.
   *Verify:* unit test with mocked HTTP; one live call sanity check (dims = 1024).
 
-- [ ] **T13. `save_component` tool**
+- [x] **T13. `save_component` tool**
   By candidateId, inline fields, and `saveAll`; embedding computed at save; upsert semantics; crop + snippets persisted.
   *Verify:* unit tests (mocked embeddings) for all three input modes + upsert; mcpjam call saves a fixture candidate.
 
-- [ ] **T14. `find_components` tool**
+- [x] **T14. `find_components` tool**
   Query embedding → KNN (over-fetch ×4) → filters (category/tag/theme/sourceUrl) → ranked results with scores + crop paths; empty-library friendly message.
   *Verify:* unit test with seeded embeddings asserts ordering + filter behavior; mcpjam call returns expected component first.
 
-- [ ] **T15. `search_designs` tool**
+- [x] **T15. `search_designs` tool**
   Same index grouped by site, per-site best matches.
   *Verify:* unit test with components from 2 sites asserts grouping; mcpjam call.
 

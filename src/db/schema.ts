@@ -65,7 +65,7 @@ CREATE INDEX IF NOT EXISTS idx_components_category ON components(category);
 export const VEC_SCHEMA_SQL = (dims: number) => `
 CREATE VIRTUAL TABLE IF NOT EXISTS vec_components USING vec0(
   component_id INTEGER PRIMARY KEY,
-  embedding float[${dims}]
+  embedding float[${dims}] distance_metric=cosine
 );
 `;
 
