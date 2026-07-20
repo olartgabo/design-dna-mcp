@@ -26,7 +26,10 @@ export function registerFindComponents(server: McpServer, ctx: AppContext): void
     },
     async ({ query, k, category, tag, theme, sourceUrl }) => {
       try {
-        const embedder = makeVoyageEmbedder(ctx.config);
+        // lazy: defers the VOYAGE_API_KEY check until a vector is actually needed,
+        // so an empty library answers helpfully even without a key
+        const embedder: Parameters<typeof findComponents>[1] = (texts, t) =>
+          makeVoyageEmbedder(ctx.config)(texts, t);
         const { hits, librarySize } = await findComponents(ctx.db, embedder, query, k, {
           category,
           tag,

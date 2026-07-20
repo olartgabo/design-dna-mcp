@@ -21,7 +21,8 @@ export function registerSearchDesigns(server: McpServer, ctx: AppContext): void 
     },
     async ({ query, k }) => {
       try {
-        const embedder = makeVoyageEmbedder(ctx.config);
+        const embedder: Parameters<typeof searchDesigns>[1] = (texts, t) =>
+          makeVoyageEmbedder(ctx.config)(texts, t);
         const { sites, librarySize } = await searchDesigns(ctx.db, embedder, query, k);
         const payload =
           librarySize === 0

@@ -76,10 +76,53 @@ Ordered, independently verifiable. Each cites the requirement it satisfies and h
   Run crawl→extract→save→find on 2–3 real inspiration sites (live keys); fix breakage found (lazy-load, huge pages, blocked resources).
   *Verify:* documented transcript of the loop succeeding; `find_components("sticky navigation")`-style query returns a sensible hit.
 
-- [ ] **T17. mcpjam evals + docs** (US-5)
+- [x] **T17. mcpjam evals + docs** (US-5)
   mcpjam evals config for the loop against the fixture site; `README.md` (setup, env vars, Claude Code/Desktop registration snippet, cost notes).
   *Verify:* evals run green (key-requiring steps marked); a fresh `claude mcp add` registration lists and calls tools.
 
-- [ ] **T18. Requirements sweep**
+- [x] **T18. Requirements sweep**
   Walk every EARS criterion in requirements.md against the implementation; note gaps or ship.
   *Verify:* checklist appended to this file with pass/fail per criterion.
+
+---
+
+## T18 — Requirements sweep (2026-07-19)
+
+Legend: PASS = implemented + verified by test/tooling · PARTIAL = implemented, live verification pending API keys
+
+### US-1 Crawl
+- Screenshots, DOM, computed styles, fonts, palette, spacing captured — **PASS** (fixture integration + real-site runs on linear.app & stripe.com)
+- CSS keyframes/transitions extracted with timing — **PASS** (unit + fixture tests; 167 motion rules found on linear.app)
+- Re-crawl creates new capture version — **PASS** (db + MCP tests)
+- Unreachable/blocked URL → structured error, server survives — **PASS** (INVALID_URL / CRAWL_TIMEOUT / CRAWL_BLOCKED / CRAWL_FAILED tests)
+- Returns compact captureId summary — **PASS**
+
+### US-2 Extract
+- Claude decomposition into candidates with category/description/tags/metadata — **PARTIAL** (full pipeline tested with faked Claude client; live-key run pending)
+- Auto-crawl uncrawled URL — **PASS** (implemented in tool; crawl path fully tested)
+- Evidence region: bbox → slice crop, full-page fallback — **PASS** (assignCropPath tests)
+- Claude API failure → structured error, capture intact — **PASS**
+- Candidates cached, not auto-saved — **PASS**
+
+### US-3 Save
+- Persist name/category/description/metadata/tags/sourceUrl/crop — **PASS**
+- Inline (manual) component save — **PASS**
+- Voyage embedding computed at save — **PARTIAL** (mocked embedder tested; live 1024-dim call pending key)
+- Upsert on (sourceUrl, name) — **PASS**
+- saveAll bulk mode — **PASS**
+
+### US-4 Search
+- Query embedding → top-K cosine KNN with all fields + score — **PASS** (deterministic fake-embedder tests)
+- Filters (category/tag/theme/sourceUrl) on top of vector search — **PASS**
+- Empty library → helpful message, no error (even without VOYAGE key) — **PASS** (verified via mcpjam call)
+- search_designs grouped by site — **PASS**
+
+### US-5 Server hygiene
+- stdio transport, data dir + schema auto-created, stderr-only logging — **PASS**
+- Starts without API keys; per-call MISSING_API_KEY errors naming the variable — **PASS**
+- mcpjam lists all 6 tools with complete schemas; `server doctor` all checks ok — **PASS**
+- Large payloads stay on disk; tool results carry paths/references — **PASS**
+
+### Outstanding (needs live keys — completes T16)
+1. One real-site `extract_components` run sanity-checked by hand (ANTHROPIC_API_KEY)
+2. One live Voyage embed confirming 1024 dims + end-to-end `save → find_components("sticky navigation")` returning a sensible hit (VOYAGE_API_KEY)
