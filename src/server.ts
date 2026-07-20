@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import type { Config } from "./config.js";
 import type { DB } from "./db/database.js";
 import { registerCrawlWebsite } from "./tools/crawl-website.js";
+import { registerExtractComponents } from "./tools/extract-components.js";
 
 export interface AppContext {
   config: Config;
@@ -36,6 +37,7 @@ export function createServer(ctx: AppContext): McpServer {
   );
 
   registerCrawlWebsite(server, ctx);
+  registerExtractComponents(server, ctx);
 
   return server;
 }

@@ -40,15 +40,15 @@ Ordered, independently verifiable. Each cites the requirement it satisfies and h
 
 ## Phase 2 — Analysis (US-2)
 
-- [ ] **T9. Distiller**
+- [x] **T9. Distiller**
   `distill.ts`: capture → compact JSON (structure outline, typography, palette, spacing, motion) with hard size caps; image pick + downscale (≤6).
   *Verify:* unit test asserts payload stays under cap on a large synthetic capture.
 
-- [ ] **T10. Claude extraction**
+- [x] **T10. Claude extraction**
   `anthropic.ts` + `prompts.ts` + `extract.ts`: one-shot vision call, forced tool-use schema → candidates persisted to `candidates` table; retries/backoff; `MISSING_API_KEY` / `ANALYSIS_FAILED` paths.
   *Verify:* unit test with mocked Anthropic client (schema parsing, persistence); one manual live run on a real site (requires key) sanity-checked by hand.
 
-- [ ] **T11. `extract_components` tool**
+- [x] **T11. `extract_components` tool**
   Auto-crawl when URL has no capture; `focus` hint; element crops via selector/bbox when provided, slice fallback.
   *Verify:* mcpjam call on fixture site (mock or live key) returns candidates with categories from the enum; uncrawled URL triggers crawl first.
 
